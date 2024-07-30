@@ -95,12 +95,16 @@ public ResponseEntity searchProjectByTitle(@PathVariable String title) {
 //DONE
     @GetMapping("/company-name/{company}")
     public ResponseEntity searchProjectByName(@PathVariable String company) {
+        ArrayList<Project> projects1 = new ArrayList<>();
         for (Project project : projects) {
             if (project.getCompanyName().equals(company)) {
-                return ResponseEntity.status(200).body(new ApiMessage("Project found"));
+                projects1.add(project);
             }
+            return ResponseEntity.ok(projects1);
+
         }
-        return ResponseEntity.status(404).body(new ApiMessage("Project not found"));
+        return ResponseEntity.status(200).body(new ApiMessage("Project found"));
 
     }
+}
 }
