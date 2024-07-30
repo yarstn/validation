@@ -68,16 +68,15 @@ public class EvantController {
         return ResponseEntity.ok(new ApiMessage("Event capacity updated"));
     }
 
-    @GetMapping("/search/{id}")
-    public ResponseEntity<ApiMessage> searchEvent(@PathVariable int id) {
-        Optional<Event> eventOptional = events.stream()
-                .filter(event -> event.getId() == id)
-                .findFirst();
-
-        if (eventOptional.isPresent()) {
-            return ResponseEntity.ok(new ApiMessage("Event found"));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiMessage("Event not found"));
+   @GetMapping("/search/{id}")
+public ResponseEntity<ApiMessage> searchEvent(@PathVariable int id) {
+    for (Event event : events) {
+        if (event.getId() == id) {
+            return ResponseEntity.ok(new ApiMessage("Event found: " + event));
         }
     }
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ApiMessage("Event not found"));
+}
 }
